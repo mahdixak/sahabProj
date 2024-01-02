@@ -1,3 +1,6 @@
+import fileIngester.FileIngester;
+
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
@@ -5,6 +8,14 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        System.out.println("bi tarbiat");
+        checkDirectoryExistence();
+        FileIngester ingester = new FileIngester();
+
+    }
+
+    private static void checkDirectoryExistence() {
+        String path = "/home/mahdixak/sahab/sahabProj/logs/";
+        File file = new File(path);
+        if (!file.exists()) new File(path).mkdir();
     }
 }
