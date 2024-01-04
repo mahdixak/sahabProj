@@ -2,10 +2,12 @@ package fileIngester;
 
 import java.io.*;
 import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FileIngester extends Thread{
+    private final ArrayList<File> allFiles = new ArrayList<>();
     private final String logsRegex = "^((?<date>\\d+\\-\\d+\\-\\d+)\\s*)|" +
                                      "((?<time>\\d+:\\d+:\\d+)\\s*)|" +
                                      "(,(?<number>\\d+)\\s*)|" +
@@ -52,17 +54,25 @@ public class FileIngester extends Thread{
                     if (( kind.toString().equals("ENTRY_CREATE") ) && (eventAddress.charAt(eventAddress.length()-1)!='~')) {
                         fileHandler(eventAddress);
                     }
+                    if (( kind.toString().equals("ENTRY_DELETE") ) && (eventAddress.charAt(eventAddress.length()-1)!='~')) {
+                        removeFile(eventAddress);
+                    }
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
 
     }
 
+    private void removeFile(String eventAddress) {
+        File file = new File(eventAddress);
+        allFiles.remove(file);
+    }
+
     private void fileHandler(String eventAddress) {
+        File file = new File(eventAddress);
+        allFiles.add(file);
         System.out.println("hello");
     }
 }

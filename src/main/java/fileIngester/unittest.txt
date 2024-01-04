@@ -20,9 +20,9 @@
     2021-07-12 01:22:42,114 [threadName] INFO package.name.className - msg
     2021-07-12 01:22:42 [threadName] INFO package.name.className - msg
     2021-07-12 01:22:42,114 [threadName] INFO package.name.className - msg
-    2021-07-12 01:22:42,114 [threadName] INFO package.name.className - msg
-    2021-07-12 01:22:42,114 [threadName] INFO package.name.className - msg
-    2021-07-12 01:22:42,114 [threadName] INFO package.name.className - msg
+    2021-07-12 01:22:42,114 [threadName] INFO package.name.className  msg
+    2021-07-12 01:22:42,114 [threadName] INFO package.name.className- msg
+    2021-07-12 01:22:42,114 [threadName] INFO package.name.className -msg
 
 
 
