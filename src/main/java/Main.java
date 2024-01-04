@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
         checkDirectoryExistence();
         FileIngester ingester = new FileIngester();
+        ingester.start();
 
     }
 

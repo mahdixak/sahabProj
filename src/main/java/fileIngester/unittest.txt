@@ -1,0 +1,28 @@
+    2021-07-12
+    123:23:23 12-23-23
+    234:23:2343-432-432
+    ,1234
+    ,234 234-234-234 234:234:234
+    234:23:23,234 234-234-2
+    [234234324] 234-234-222 ,234 23:23:23
+    23:234:23 ,234 [234] 43-234-234
+    -sdf 234:234:234  234-234-234 [23423432]
+
+         2343:234:234
+
+    2021-07-12 01:22:42,114 [threadName] INFO package.name.className - msg
+    2021-07-12 01:22:42,114 [threadName] INFO package.name.className -
+    2021-07-12 01:22:42,114  - msg
+    2021-07-12 [threadName] INFO package.name.className - msg
+    2021-07-12 023 [threadName] INFO package.name.className - msg
+     01:22:42,114 [threadName] INFO package.name.className - msgd
+    2021-07-12 01:22:42,114 [threadName] INFO package.name.className - msg
+    2021-07-12 01:22:42,114 [threadName] INFO package.name.className - msg
+    2021-07-12 01:22:42 [threadName] INFO package.name.className - msg
+    2021-07-12 01:22:42,114 [threadName] INFO package.name.className - msg
+    2021-07-12 01:22:42,114 [threadName] INFO package.name.className - msg
+    2021-07-12 01:22:42,114 [threadName] INFO package.name.className - msg
+    2021-07-12 01:22:42,114 [threadName] INFO package.name.className - msg
+
+
+
