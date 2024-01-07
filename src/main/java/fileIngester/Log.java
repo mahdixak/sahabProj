@@ -1,17 +1,20 @@
 package fileIngester;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Log {
-    private final String date;
-    private final Date time;
+    private final ArrayList<Log> allLogs = new ArrayList<>();
+    private final Calendar date;
+    private final String  time;
     private final String number;
     private final String thread;
     private final String info;
     private final String packageName;
     private final String argument;
 
-    public Log(String date, Date time, String number, String thread, String info, String packageName, String argument) {
+    public Log(Calendar date, String time, String number, String thread, String info, String packageName, String argument) {
         this.date = date;
         this.time = time;
         this.number = number;
@@ -19,13 +22,15 @@ public class Log {
         this.info = info;
         this.packageName = packageName;
         this.argument = argument;
+        allLogs.add(this);
+        System.out.println("log added successfully");
     }
 
-    public String getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
