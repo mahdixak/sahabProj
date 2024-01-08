@@ -10,11 +10,9 @@ import java.util.regex.Pattern;
 
 public class FileThread extends Thread{
 
+    public final String defaultRegex = "^\\s*(?<date>\\d+-\\d+-\\d+)\\s*(?<time>\\d+:\\d+:\\d+)\\s*,(?<number>\\d+)\\s*(\\[(?<thread>\\S*)\\])\\s*(?<info>[A-Z]+)\\s*(?<package>\\S+)\\s*-(?<argument>\\S+)\\s*$";
+    public final String logsRegex = "^\\s*(((?<date>\\d+-\\d+-\\d+)\\s+)|((?<time>\\d+:\\d+:\\d+)\\s*)|(,(?<number>\\d+)\\s*)|(\\[(?<thread>\\S*)]\\s*)|((?<info>[A-Z]+)\\s*)|((?<package>\\S+)\\s*)|(-\\s*(?<argument>\\S+)\\s*))+\\s*$";
     private final File file;
-
-    private final String defaultRegex = "^\\s*(?<date>\\d+-\\d+-\\d+)\\s*(?<time>\\d+:\\d+:\\d+)\\s*,(?<number>\\d+)\\s*(\\[(?<thread>\\S*)\\])\\s*(?<info>[A-Z]+)\\s*(?<package>\\S+)\\s*-(?<argument>\\S+)\\s*$";
-
-    private final String logsRegex = "^\\s*(((?<date>\\d+-\\d+-\\d+)\\s+)|((?<time>\\d+:\\d+:\\d+)\\s*)|(,(?<number>\\d+)\\s*)|(\\[(?<thread>\\S*)]\\s*)|((?<info>[A-Z]+)\\s*)|((?<package>\\S+)\\s*)|(-\\s*(?<argument>\\S+)\\s*))+\\s*$";
 
     public FileThread(File file) {
         this.file = file;
@@ -23,20 +21,19 @@ public class FileThread extends Thread{
     @Override
     public void run() {
         String line;
+        Matcher matcher;
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 line = scanner.nextLine();
                 System.out.println(line);
                 if (line.length()>=5) {
-                    Pattern pattern1 = Pattern.compile(defaultRegex,Pattern.CASE_INSENSITIVE);
-                    Pattern pattern2 = Pattern.compile(logsRegex, Pattern.CASE_INSENSITIVE);
-                    Matcher matcher = pattern1.matcher(line);
-                    if (matcher.find()) {
+                    Pattern pattern = Pattern.compile(defaultRegex,Pattern.CASE_INSENSITIVE);
+                    if ((matcher = isRegexMatched(pattern,line))!=null) {
                         findParameters(matcher);
                     } else {
-                        matcher = pattern2.matcher(line);
-                        if (matcher.find())
+                        pattern = Pattern.compile(logsRegex, Pattern.CASE_INSENSITIVE);
+                        if ((matcher = isRegexMatched(pattern,line))!=null)
                             findParameters(matcher);
                     }
                 }
@@ -45,6 +42,10 @@ public class FileThread extends Thread{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Matcher isRegexMatched(Pattern pattern, String text) {
+        return pattern.matcher(text);
     }
 
     private void findParameters(Matcher matcher) {
@@ -59,13 +60,13 @@ public class FileThread extends Thread{
         if (date!=null) {
             dateC = splitDate(date);
         }
-        System.out.println("date is: " + date);
-        System.out.println("time is: " + time);
-        System.out.println("number is: " + number);
-        System.out.println("thread is: " + thread);
-        System.out.println("info is: " + info);
-        System.out.println("package is: " + packageName);
-        System.out.println("argument is: " + argument);
+//        System.out.println("date is: " + date);
+//        System.out.println("time is: " + time);
+//        System.out.println("number is: " + number);
+//        System.out.println("thread is: " + thread);
+//        System.out.println("info is: " + info);
+//        System.out.println("package is: " + packageName);
+//        System.out.println("argument is: " + argument);
         new Log(dateC,time,number,thread,info,packageName,argument);
     }
 
