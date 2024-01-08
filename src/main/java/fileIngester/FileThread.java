@@ -67,7 +67,31 @@ public class FileThread extends Thread{
 //        System.out.println("info is: " + info);
 //        System.out.println("package is: " + packageName);
 //        System.out.println("argument is: " + argument);
-        new Log(dateC,time,number,thread,info,packageName,argument);
+        createLog(dateC,time,number,thread,info,packageName,argument);
+    }
+
+    private void createLog(Calendar dateC, String time, String number, String thread, String info, String packageName, String argument) {
+        Log log = new Log(dateC,time,number,thread,info,packageName,argument);
+        logToJson(log);
+    }
+
+    private void logToJson(Log log) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("date:");
+        buffer.append(log.getDate());
+        buffer.append("time:");
+        buffer.append(log.getTime());
+        buffer.append("number:");
+        buffer.append(log.getNumber());
+        buffer.append("thread:");
+        buffer.append(log.getThread());
+        buffer.append("info:");
+        buffer.append(log.getInfo());
+        buffer.append("package:");
+        buffer.append(log.getPackageName());
+        buffer.append("argument:");
+        buffer.append(log.getArgument());
+
     }
 
     private Calendar splitDate(String date) {

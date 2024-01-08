@@ -1,8 +1,0 @@
-first need to start zookeeper : $ bin/zookeeper-server-start.sh config/zookeeper.properties
-then need to run kafka server : $ bin/kafka-server-start.sh config/server.properties (open it in another terminal)
-// messages, logs, records ,etc. are called events here
-// events store in topics >> we have to create a new topic in out broker
-to create a topic use : $ bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
-and to see topic status use: $ bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092
-for writing events run this command and write events in the opened bash : $ bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
-for reading events use : $ bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092

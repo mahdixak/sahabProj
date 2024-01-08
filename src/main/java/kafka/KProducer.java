@@ -11,21 +11,18 @@ import org.apache.logging.log4j.Logger;
 import java.util.Properties;
 
 public class KProducer {
+    private final Properties properties = new Properties();
+    private final KafkaProducer<Integer,String> producer = new KafkaProducer<>(properties);
+
+    private int key = 1;
     private static final Logger logger = LogManager.getLogger(KProducer.class);
 
-    public static void main(String[] args) {
-        new KProducer().run();
 
-    }
-
-    private void run() {
-        Properties properties = new Properties();
+    public KProducer() {
         properties.put(ProducerConfig.CLIENT_ID_CONFIG,AppConfigs.applicationID);
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class.getName());
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-
-        KafkaProducer<Integer, String> producer = new KafkaProducer<>(properties);
 
         producer.send(new ProducerRecord<>(AppConfigs.topicName.text, 1, "simple-message" + 1));
         producer.send(new ProducerRecord<>(AppConfigs.topicName.text, 2, "simple-message2" + 2));
@@ -39,4 +36,8 @@ public class KProducer {
         new KConsumer().run();
     }
 
+    public void sendJsonToKafka(String jsonText) {
+        producer.send(new ProducerRecord<>(AppConfigs.topicName.text, key,jsonText + key));
+        key++;
+    }
 }
