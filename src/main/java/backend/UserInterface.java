@@ -1,33 +1,41 @@
 package backend;
 
-import java.sql.*;
+import java.util.Scanner;
 
-public class UserInterface {
-
-    public static void main(String[] args) {
-        new UserInterface().run();
-    }
-
-    private void run() {
-        String sql = "";
-        String url = "jdbc:mysql://localhost:3306/logdb";
-        String username = "mahdi";
-        String password = "mahdiak0447@1#";
-        try {
-            Class.forName("com.mysql:jdbc.Driver");
-            Connection connection = DriverManager.getConnection(url,username,password);
-            Statement statement = connection.createStatement();
-//            ResultSet result = statement.executeQuery(sql);
-            sql = "INSERT INTO Log (LogDate,LogTime,LogNumber,thread,info,package,argument)" + "Values (23423,15324,234,thread,info,package,argument) ";
-
-
-            statement.execute(sql);
-
-
-            statement.close();
-            connection.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+public class UserInterface extends Thread{
+    private final Scanner scanner = new Scanner(System.in);
+    @Override
+    public void run() {
+        String command;
+        while (true) {
+            command = scanner.nextLine();
+            if (command.matches(Commands.show_errors.command))
+                showErrors();
+            else if (command.matches(Commands.show_warnings.command))
+                showWarnings();
+            else if (command.matches(Commands.last_10_logs.command))
+                last10Commands();
+            else if (command.matches(Commands.last_50_logs.command))
+                last50Commands();
+            else if (command.matches(Commands.last_100_logs.command))
+                last100Commands();
         }
     }
+
+    private void last100Commands() {
+    }
+
+    private void last10Commands() {
+    }
+
+    private void last50Commands() {
+    }
+
+    private void showWarnings() {
+
+    }
+
+    private void showErrors() {
+    }
+
 }

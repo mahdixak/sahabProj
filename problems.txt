@@ -1,0 +1,4 @@
+1. threads in fileThread are not efficient! : if a file change 5 times , 5 thread will be created !
+2. kafka server don't working properly! : applicationID doesn't connect !
+3. can't write data to mysql database!
+4. backend part is not completed!

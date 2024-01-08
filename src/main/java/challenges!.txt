@@ -1,6 +1,0 @@
-how to connecting kafka to java code
-
-
-todo : https://www.youtube.com/watch?v=6uP_f_z3CbM
-       https://www.youtube.com/watch?v=joczR0Kdcs4
-       

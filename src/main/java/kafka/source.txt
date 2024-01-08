@@ -1,6 +1,0 @@
-https://kafka.apache.org/quickstart // step 5 done
-
-kafka is a type of microservices
-topic >> like directory
-events >> like files in directory
-

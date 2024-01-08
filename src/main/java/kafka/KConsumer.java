@@ -1,5 +1,6 @@
 package kafka;
 
+import mySql.MySql;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -8,6 +9,7 @@ import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rulesEvaluator.RulesEvaluator;
 
 import java.time.Duration;
 import java.util.Properties;
@@ -27,15 +29,19 @@ public class KConsumer {
 
         KafkaConsumer<String,String> consumer = new KafkaConsumer<>(properties);
 
+        RulesEvaluator evaluator = new RulesEvaluator();
+
         while (true) {
             ConsumerRecords<String,String> records = consumer.poll(Duration.ofMillis(100));
             for (ConsumerRecord<String,String> record : records) {
                 System.out.print("from " + record.topic()+" topic : ");
                 System.out.print("key: " + record.key());
                 System.out.println(" value: "+record.value());
+                evaluator.stringToLog(record.value());
             }
         }
 
     }
+
 
 }

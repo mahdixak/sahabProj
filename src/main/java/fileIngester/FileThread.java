@@ -1,9 +1,9 @@
 package fileIngester;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import kafka.KafkaApplication;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +27,8 @@ public class FileThread extends Thread{
             while (scanner.hasNext()) {
                 line = scanner.nextLine();
                 System.out.println(line);
-                if (line.length()>=5) {
+                String temp = line.replaceAll(" ","");
+                if (temp.length()>=5) {
                     Pattern pattern = Pattern.compile(defaultRegex,Pattern.CASE_INSENSITIVE);
                     if ((matcher = isRegexMatched(pattern,line))!=null) {
                         findParameters(matcher);
@@ -56,10 +57,6 @@ public class FileThread extends Thread{
         String info = matcher.group("info");
         String packageName = matcher.group("package");
         String argument = matcher.group("argument");
-        Calendar dateC = null;
-        if (date!=null) {
-            dateC = splitDate(date);
-        }
 //        System.out.println("date is: " + date);
 //        System.out.println("time is: " + time);
 //        System.out.println("number is: " + number);
@@ -67,42 +64,30 @@ public class FileThread extends Thread{
 //        System.out.println("info is: " + info);
 //        System.out.println("package is: " + packageName);
 //        System.out.println("argument is: " + argument);
-        createLog(dateC,time,number,thread,info,packageName,argument);
+        createLog(date,time,number,thread,info,packageName,argument);
     }
 
-    private void createLog(Calendar dateC, String time, String number, String thread, String info, String packageName, String argument) {
+    private void createLog(String dateC, String time, String number, String thread, String info, String packageName, String argument) {
         Log log = new Log(dateC,time,number,thread,info,packageName,argument);
-        logToJson(log);
+        logToString(log);
     }
 
-    private void logToJson(Log log) {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("date:");
-        buffer.append(log.getDate());
-        buffer.append("time:");
-        buffer.append(log.getTime());
-        buffer.append("number:");
-        buffer.append(log.getNumber());
-        buffer.append("thread:");
-        buffer.append(log.getThread());
-        buffer.append("info:");
-        buffer.append(log.getInfo());
-        buffer.append("package:");
-        buffer.append(log.getPackageName());
-        buffer.append("argument:");
-        buffer.append(log.getArgument());
-
+    private void logToString(Log log) {
+        String buffer = "date:" +
+                log.getDate() +
+                ",time:" +
+                log.getTime() +
+                ",number:" +
+                log.getNumber() +
+                ",thread:" +
+                log.getThread() +
+                ",info:" +
+                log.getInfo() +
+                ",package:" +
+                log.getPackageName() +
+                ",  argument:" +
+                log.getArgument();
+        KafkaApplication.run(buffer);   // from here json string line will send to the kafka producer !
     }
 
-    private Calendar splitDate(String date) {
-        String[] args = date.split("-");
-        Calendar calendar = new GregorianCalendar();
-        ArrayList<Integer> argss = new ArrayList<>();
-        for (String s : args) {
-            argss.add(Integer.parseInt(s));
-        }
-        calendar.set(argss.get(0), argss.get(1), argss.get(2));
-        System.out.println(calendar.getTime());
-        return calendar;
-    }
 }

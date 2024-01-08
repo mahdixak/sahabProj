@@ -1,15 +1,13 @@
 import fileIngester.FileIngester;
 
 import java.io.File;
-import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         checkDirectoryExistence();
         FileIngester ingester = new FileIngester();
-        ingester.start();
-
+        ingester.run();
     }
 
     private static void checkDirectoryExistence() {

@@ -7,7 +7,7 @@ public enum Outputs {
 
     ;
 
-    private final String outputMessage;
+    public final String outputMessage;
 
     Outputs(String outputMessage) {
         this.outputMessage = outputMessage;

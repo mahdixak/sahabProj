@@ -1,16 +1,21 @@
 package fileIngester;
 
+import backend.UserInterface;
+import kafka.KafkaApplication;
+
 import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileIngester extends Thread{
+public class FileIngester{
     private final ArrayList<File> allFiles = new ArrayList<>();
 
-    @Override
     public void run() {
+        KafkaApplication.runConsumer(); // here the consumer will start watching for data !
+        UserInterface userInterface = new UserInterface(); // here userInterface will run and waits for user input in terminal !
+        userInterface.start();
         checkCurrentFiles();        //this method will check the files that already are in the logs directory
         try {                       // always checking the log directory for new files
             WatchService watchService = FileSystems.getDefault().newWatchService();
@@ -20,7 +25,6 @@ public class FileIngester extends Thread{
             WatchKey watchKey = watchService.take();
             while (watchKey.reset()) {
                 watchKey = watchService.take();
-                Path eventDir = keyMap.get(watchKey);
                 for (WatchEvent<?> event: watchKey.pollEvents()) {
                     WatchEvent.Kind<?> kind = event.kind();
                     Path eventPath = (Path) event.context();
@@ -62,7 +66,6 @@ public class FileIngester extends Thread{
                 }
             }
         }
-
     }
 
     private void createFile(String eventAddress) {
